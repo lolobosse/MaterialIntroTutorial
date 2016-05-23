@@ -2,16 +2,12 @@ package za.co.riggaroo.materialhelptutorial.tutorial;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
-import za.co.riggaroo.materialhelptutorial.R;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 /**
@@ -67,7 +63,7 @@ public class MaterialTutorialPresenter implements MaterialTutorialContract.UserA
         if (position <= -1.0f || position >= 1.0f) {
 
         } else if (position == 0.0f) {
-            tutorialView.setBackgroundColor(ContextCompat.getColor(context, tutorialItems.get(pagePosition).getBackgroundColor()));
+            tutorialView.setBackgroundColor(context.getResources().getColor(tutorialItems.get(pagePosition).getBackgroundColor()));
         } else {
             fadeNewColorIn(pagePosition, position);
         }
@@ -84,12 +80,12 @@ public class MaterialTutorialPresenter implements MaterialTutorialContract.UserA
     private void fadeNewColorIn(int index, float multiplier) {
         if (multiplier < 0) {
 
-            int colorStart = ContextCompat.getColor(context, tutorialItems.get(index).getBackgroundColor());
+            int colorStart = context.getResources().getColor(tutorialItems.get(index).getBackgroundColor());
             if (index + 1 == fragments.size()) {
                 tutorialView.setBackgroundColor(colorStart);
                 return;
             }
-            int colorEnd = ContextCompat.getColor(context, tutorialItems.get(index + 1).getBackgroundColor());
+            int colorEnd = context.getResources().getColor(tutorialItems.get(index + 1).getBackgroundColor());
             int colorToSet = (int) (new ArgbEvaluator().evaluate(Math.abs(multiplier), colorStart, colorEnd));
             tutorialView.setBackgroundColor(colorToSet);
         }
