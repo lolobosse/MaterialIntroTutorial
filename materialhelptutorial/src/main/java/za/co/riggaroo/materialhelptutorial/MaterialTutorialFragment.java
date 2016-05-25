@@ -1,5 +1,6 @@
 package za.co.riggaroo.materialhelptutorial;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -67,10 +68,17 @@ public class MaterialTutorialFragment extends Fragment {
             Glide.with(this).load(tutorialItem.getBackgroundImageRes()).into(imageViewBack);
         }
         if (tutorialItem.getForegroundImageRes() != -1 && !tutorialItem.isGif()) {
+            imageViewFront.setPadding(40, 40, 40, 40);
+            textView.setTextColor(Color.WHITE);
+            textViewSubTitle.setTextColor(Color.WHITE);
             Glide.with(this).load(tutorialItem.getForegroundImageRes()).into(imageViewFront);
         }
         if (tutorialItem.getForegroundImageRes() != -1 && tutorialItem.isGif()){
-            Glide.with(this).load(tutorialItem.getForegroundImageRes()).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewFront);
+            Glide.with(this).load(tutorialItem.getForegroundImageRes())
+                    .asGif()
+                    .dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(imageViewFront);
         }
         return v;
     }

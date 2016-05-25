@@ -122,7 +122,9 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
 
     @Override
     public void setViewPagerFragments(List<MaterialTutorialFragment> materialTutorialFragments) {
-        mHelpTutorialViewPager.setAdapter(new MaterialTutorialAdapter(getSupportFragmentManager(), materialTutorialFragments));
+        MaterialTutorialAdapter adapter = new MaterialTutorialAdapter(getSupportFragmentManager(), materialTutorialFragments);
+        mHelpTutorialViewPager.setAdapter(adapter);
+        mHelpTutorialViewPager.setOffscreenPageLimit(adapter.getCount()-1);
         CirclePageIndicator mCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.activity_help_view_page_indicator);
 
         mCirclePageIndicator.setViewPager(mHelpTutorialViewPager);

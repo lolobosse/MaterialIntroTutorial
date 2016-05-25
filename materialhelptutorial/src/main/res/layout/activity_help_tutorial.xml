@@ -17,12 +17,6 @@
 
     </android.support.v4.view.ViewPager>
 
-    <View android:layout_width="match_parent"
-
-        android:layout_above="@+id/linear_layout_indicator"
-        android:layout_height="1dp"
-        android:background="#E0E0E0"
-        />
     <LinearLayout
         android:id="@+id/linear_layout_indicator"
         android:layout_width="match_parent"
@@ -42,7 +36,7 @@
             android:gravity="center"
             android:text="@string/tutorial_skip"
             android:textColor="@color/tutorial_buttonTextColor"
-            android:textSize="18sp"
+            android:textSize="11sp"
             android:layout_weight="0.25" />
 
         <za.co.riggaroo.materialhelptutorial.view.CirclePageIndicator
@@ -50,8 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_above="@id/activity_help_skip_textview"
-            app:fillColor="#41FFFFFF"
-            app:pageColor="#14FFFFFF"
+            app:fillColor="#c7363636"
+            app:pageColor="#99fff3f3"
             app:radius="6dp"
             android:layout_weight="0.5"
             app:strokeColor="#E0E0E0"

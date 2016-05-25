@@ -16,7 +16,6 @@ public class MaterialTutorialAdapter extends FragmentPagerAdapter {
     public MaterialTutorialAdapter(FragmentManager fm, List<MaterialTutorialFragment> fragments) {
         super(fm);
         this.fragments = fragments;
-
     }
 
     @Override

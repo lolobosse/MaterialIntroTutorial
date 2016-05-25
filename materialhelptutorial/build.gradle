@@ -8,7 +8,7 @@ def gitUrl = 'https://github.com/spongebobrf/MaterialIntroTutorial.git'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         minSdkVersion 11
@@ -24,13 +24,20 @@ android {
     }
 }
 
+repositories {
+    jcenter()
+    maven {
+        name 'glide-snapshot'
+        url 'http://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 dependencies {
     final SUPPORT_LIBRARY_VERSION = '22.+'
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:percent:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.bumptech.glide:glide:3.8.0-SNAPSHOT'
 }
