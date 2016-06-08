@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="@string/tutorial_skip"
             android:textColor="@color/tutorial_buttonTextColor"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:layout_weight="0.25" />
 
         <za.co.riggaroo.materialhelptutorial.view.CirclePageIndicator
@@ -61,7 +61,7 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_navigate_next"
+                android:src="@drawable/ic_navigate_next_black_36dp"
                 style="@android:style/Widget.Holo.Button.Borderless"
                 android:id="@+id/activity_next_button"
                 android:layout_margin="8dp"

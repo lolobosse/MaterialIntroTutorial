@@ -58,6 +58,6 @@
         android:layout_above="@id/fragment_help_tutorial_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        tools:src="@drawable/ic_navigate_next"
+        tools:src="@drawable/ic_navigate_next_black_36dp"
         android:scaleType="fitCenter" />
 </RelativeLayout>
