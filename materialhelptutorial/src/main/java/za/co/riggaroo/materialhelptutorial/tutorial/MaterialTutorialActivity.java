@@ -28,7 +28,7 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
     private ViewPager mHelpTutorialViewPager;
     private View mRootView;
     private TextView mTextViewSkip;
-    private ImageButton mNextButton;
+    private Button mNextButton;
     private Button mDoneButton;
     private MaterialTutorialPresenter materialTutorialPresenter;
 
@@ -56,7 +56,7 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
         mRootView = findViewById(R.id.activity_help_root);
         mHelpTutorialViewPager = (ViewPager) findViewById(R.id.activity_help_view_pager);
         mTextViewSkip = (TextView) findViewById(R.id.activity_help_skip_textview);
-        mNextButton = (ImageButton) findViewById(R.id.activity_next_button);
+        mNextButton = (Button) findViewById(R.id.activity_next_button);
         mDoneButton = (Button) findViewById(R.id.activity_tutorial_done);
 
         mTextViewSkip.setOnClickListener(finishTutorialClickListener);
