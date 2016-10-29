@@ -1,6 +1,7 @@
 package za.co.riggaroo.materialhelptutorial.tutorial;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -9,11 +10,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
+import jobninja.eu.analytics.Analytics;
 import za.co.riggaroo.materialhelptutorial.MaterialTutorialFragment;
 import za.co.riggaroo.materialhelptutorial.R;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
@@ -31,15 +32,6 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
     private Button mNextButton;
     private Button mDoneButton;
     private MaterialTutorialPresenter materialTutorialPresenter;
-
-    private View.OnClickListener finishTutorialClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            materialTutorialPresenter.doneOrSkipClick();
-
-        }
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +51,8 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
         mNextButton = (Button) findViewById(R.id.activity_next_button);
         mDoneButton = (Button) findViewById(R.id.activity_tutorial_done);
 
-        mTextViewSkip.setOnClickListener(finishTutorialClickListener);
-        mDoneButton.setOnClickListener(finishTutorialClickListener);
-
+        mTextViewSkip.setOnClickListener(new FinishOrDoneClickListener(this, true));
+        mDoneButton.setOnClickListener(new FinishOrDoneClickListener(this, false));
 
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +65,21 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
         });
         List<TutorialItem> tutorialItems = getIntent().getParcelableArrayListExtra(MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS);
         materialTutorialPresenter.loadViewPagerFragments(tutorialItems);
+
+        // For Analytics only
+        mHelpTutorialViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            int previous = 0;
+            @Override
+            public void onPageSelected(int current) {
+                if (previous>current) {
+                    Analytics.tutorialPreviousSlideSwiped(MaterialTutorialActivity.this, previous, current);
+                }
+                else if (current> previous){
+                    Analytics.tutorialNextSlideSwiped(MaterialTutorialActivity.this, previous, current);
+                }
+                previous = current;
+            }
+        });
     }
 
     private void setStatusBarColor() {
@@ -91,7 +97,9 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
     public void showNextTutorial() {
         int currentItem = mHelpTutorialViewPager.getCurrentItem();
         if (currentItem < materialTutorialPresenter.getNumberOfTutorials()) {
-            mHelpTutorialViewPager.setCurrentItem(mHelpTutorialViewPager.getCurrentItem() + 1);
+            int nextPage = mHelpTutorialViewPager.getCurrentItem() + 1;
+            mHelpTutorialViewPager.setCurrentItem(nextPage);
+            Analytics.tutorialNextSlideClicked(this, nextPage);
         }
     }
 
@@ -124,7 +132,7 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
     public void setViewPagerFragments(List<MaterialTutorialFragment> materialTutorialFragments) {
         MaterialTutorialAdapter adapter = new MaterialTutorialAdapter(getSupportFragmentManager(), materialTutorialFragments);
         mHelpTutorialViewPager.setAdapter(adapter);
-        mHelpTutorialViewPager.setOffscreenPageLimit(adapter.getCount()-1);
+        mHelpTutorialViewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         CirclePageIndicator mCirclePageIndicator = (CirclePageIndicator) findViewById(R.id.activity_help_view_page_indicator);
 
         mCirclePageIndicator.setViewPager(mHelpTutorialViewPager);
@@ -153,5 +161,22 @@ public class MaterialTutorialActivity extends AppCompatActivity implements Mater
                 }
 
         );
+    }
+
+    private class FinishOrDoneClickListener implements View.OnClickListener {
+
+        boolean isSkip;
+        Context c;
+
+        private FinishOrDoneClickListener(Context c, boolean isSkip) {
+            this.isSkip = isSkip;
+            this.c = c;
+        }
+
+        @Override
+        public void onClick(View v) {
+            materialTutorialPresenter.doneOrSkipClick();
+            Analytics.tutorialEnded(c, isSkip);
+        }
     }
 }
