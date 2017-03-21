@@ -5,7 +5,7 @@ group = "za.co.riggaroo"
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '25'
 
     defaultConfig {
         minSdkVersion 15
